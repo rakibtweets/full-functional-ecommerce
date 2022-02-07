@@ -34,7 +34,7 @@ const Header = () => {
           <span id="cart" className="ms-3">
             <FaShoppingCart size="1.7em" />
           </span>
-          <span className="ms-1 rounded-circle" id="cart_count">
+          <span className="ms-1 rounded p-1" id="cart_count">
             2
           </span>
         </div>
