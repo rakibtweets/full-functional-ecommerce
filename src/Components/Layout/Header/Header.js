@@ -1,14 +1,14 @@
 import React, { Fragment } from 'react';
 import './Header.css';
-import { FaSearch } from 'react-icons/fa';
+import { FaSearch, FaShoppingCart } from 'react-icons/fa';
 
 const Header = () => {
   return (
     <Fragment>
-      <nav className="navbar row">
+      <nav className="navbar row py-3">
         <div className="col-12 col-md-3">
           <div className="navbar-brand">
-            <h6 className="text-white">React Shop</h6>
+            <h6 className="text-white fw-bold">React Shop</h6>
           </div>
         </div>
         <div className="col-12 col-md-6 mt-2 mt-md-0">
@@ -32,9 +32,9 @@ const Header = () => {
           </button>
 
           <span id="cart" className="ms-3">
-            Cart
+            <FaShoppingCart size="1.7em" />
           </span>
-          <span className="ms-1" id="cart_count">
+          <span className="ms-1 rounded-circle" id="cart_count">
             2
           </span>
         </div>
