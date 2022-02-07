@@ -1,10 +1,12 @@
 import React from 'react';
 import { Container, Row } from 'react-bootstrap';
+import MetaData from '../../../Components/Layout/MetaData/MetaData';
 import './Home.css';
 
 const Home = () => {
   return (
     <Container fluid>
+      <MetaData title="Best Product Online" />
       <h1 id="products_heading">Latest Products</h1>
       <section id="products" class="container mt-5">
         <Row>
