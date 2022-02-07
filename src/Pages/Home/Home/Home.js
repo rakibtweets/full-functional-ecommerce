@@ -1,4 +1,5 @@
 import React, { Fragment, useEffect } from 'react';
+import { useAlert } from 'react-alert';
 import { Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import MetaData from '../../../Components/Layout/MetaData/MetaData';
@@ -8,13 +9,18 @@ import { getProducts } from '../../../Redux/Actions/productActions';
 import './Home.css';
 
 const Home = () => {
+  const alert = useAlert();
   const dispatch = useDispatch();
   const { loading, products, error, productCount } = useSelector(
     (state) => state.products
   );
   useEffect(() => {
+    if (error) {
+      return alert.error(error);
+    }
     dispatch(getProducts());
-  }, [dispatch]);
+  }, [dispatch, error, alert]);
+
   return (
     <Fragment>
       {loading ? (
