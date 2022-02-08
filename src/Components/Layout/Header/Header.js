@@ -21,9 +21,11 @@ const Header = () => {
           <Search />
         </div>
         <div className="col-12 col-md-3 mt-4 mt-md-0 text-center">
-          <button className="btn" id="login_btn">
-            Login
-          </button>
+          <Link to="/login">
+            <button className="btn" id="login_btn">
+              Login
+            </button>
+          </Link>
 
           <span id="cart" className="ms-3">
             <FaShoppingCart size="1.7em" />

@@ -3,6 +3,7 @@ import Header from './Components/Layout/Header/Header';
 import Home from './Pages/Home/Home/Home';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ProductDetails from './Components/ProductDetails/ProductDetails';
+import Login from './Components/User/Login';
 
 function App() {
   return (
@@ -15,6 +16,14 @@ function App() {
               <>
                 <Header />
                 <Home />
+              </>
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <>
+                <Login />
               </>
             }
           />
