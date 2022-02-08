@@ -38,9 +38,14 @@ const Home = () => {
     'Home',
   ];
 
-  const { loading, products, error, productCount, resPerPage } = useSelector(
-    (state) => state.products
-  );
+  const {
+    loading,
+    products,
+    error,
+    productCount,
+    resPerPage,
+    filterProductCount,
+  } = useSelector((state) => state.products);
 
   useEffect(() => {
     if (error) {
@@ -52,6 +57,12 @@ const Home = () => {
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
+
+  //pagination product count
+  let count = productCount;
+  if (keyword) {
+    count = filterProductCount;
+  }
 
   return (
     <Fragment>
@@ -119,7 +130,7 @@ const Home = () => {
           </section>
 
           {/* Pagination */}
-          {resPerPage <= productCount && (
+          {resPerPage <= count && (
             <div className="d-flex justify-content-center mt-5">
               <Pagination
                 activePage={currentPage}
