@@ -11,9 +11,7 @@ import './Home.css';
 const Home = () => {
   const alert = useAlert();
   const dispatch = useDispatch();
-  const { loading, products, error, productCount } = useSelector(
-    (state) => state.products
-  );
+  const { loading, products, error } = useSelector((state) => state.products);
   useEffect(() => {
     if (error) {
       return alert.error(error);
