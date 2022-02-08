@@ -19,6 +19,7 @@ const Home = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [price, setPrice] = useState([1, 1000]);
   const [category, setCategory] = useState('');
+  const [rating, setRating] = useState(0);
   const alert = useAlert();
   const dispatch = useDispatch();
   const { keyword } = useParams();
@@ -51,8 +52,8 @@ const Home = () => {
     if (error) {
       return alert.error(error);
     }
-    dispatch(getProducts(keyword, currentPage, price, category));
-  }, [dispatch, error, alert, currentPage, keyword, price, category]);
+    dispatch(getProducts(keyword, currentPage, price, category, rating));
+  }, [dispatch, error, alert, currentPage, keyword, price, category, rating]);
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -107,6 +108,29 @@ const Home = () => {
                             onClick={() => setCategory(category)}
                           >
                             {category}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    {/* Rating */}
+                    <hr className="my-3" />
+
+                    <div className="mt-5">
+                      <h5 className="mb-3">Rating</h5>
+                      <ul className="ps-0">
+                        {[5, 4, 3, 2, 1].map((star) => (
+                          <li
+                            key={star}
+                            style={{ cursor: 'pointer', listStyleType: 'none' }}
+                            onClick={() => setRating(star)}
+                          >
+                            <div className="rating-outer">
+                              <div
+                                className="rating-inner"
+                                style={{ width: `${star * 20}%` }}
+                              ></div>
+                            </div>
                           </li>
                         ))}
                       </ul>
