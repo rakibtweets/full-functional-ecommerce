@@ -19,6 +19,15 @@ function App() {
             }
           />
           <Route
+            path="/search/:keyword"
+            element={
+              <>
+                <Header />
+                <Home />
+              </>
+            }
+          />
+          <Route
             path="/product/:id"
             element={
               <>

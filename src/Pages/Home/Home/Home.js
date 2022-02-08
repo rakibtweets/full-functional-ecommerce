@@ -3,6 +3,7 @@ import { useAlert } from 'react-alert';
 import { Row } from 'react-bootstrap';
 import Pagination from 'react-js-pagination';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import MetaData from '../../../Components/Layout/MetaData/MetaData';
 import Loader from '../../../Components/Loader/Loader';
 import Product from '../../../Components/Product/Product';
@@ -14,15 +15,17 @@ const Home = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const alert = useAlert();
   const dispatch = useDispatch();
+  const { keyword } = useParams();
   const { loading, products, error, productCount, resPerPage } = useSelector(
     (state) => state.products
   );
+
   useEffect(() => {
     if (error) {
       return alert.error(error);
     }
-    dispatch(getProducts(currentPage));
-  }, [dispatch, error, alert, currentPage]);
+    dispatch(getProducts(keyword, currentPage));
+  }, [dispatch, error, alert, currentPage, keyword]);
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
