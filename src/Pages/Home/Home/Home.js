@@ -1,23 +1,32 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { useAlert } from 'react-alert';
 import { Row } from 'react-bootstrap';
+import Pagination from 'react-js-pagination';
 import { useDispatch, useSelector } from 'react-redux';
 import MetaData from '../../../Components/Layout/MetaData/MetaData';
 import Loader from '../../../Components/Loader/Loader';
 import Product from '../../../Components/Product/Product';
 import { getProducts } from '../../../Redux/Actions/productActions';
 import './Home.css';
+// import 'bootstrap/less/bootstrap.less';
 
 const Home = () => {
+  const [currentPage, setCurrentPage] = useState(1);
   const alert = useAlert();
   const dispatch = useDispatch();
-  const { loading, products, error } = useSelector((state) => state.products);
+  const { loading, products, error, productCount, resPerPage } = useSelector(
+    (state) => state.products
+  );
   useEffect(() => {
     if (error) {
       return alert.error(error);
     }
-    dispatch(getProducts());
-  }, [dispatch, error, alert]);
+    dispatch(getProducts(currentPage));
+  }, [dispatch, error, alert, currentPage]);
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
   return (
     <Fragment>
@@ -36,6 +45,23 @@ const Home = () => {
             </Row>
           </section>
         </Fragment>
+      )}
+
+      {resPerPage <= productCount && (
+        <div className="d-flex justify-content-center mt-5">
+          <Pagination
+            activePage={currentPage}
+            itemsCountPerPage={resPerPage}
+            totalItemsCount={productCount}
+            onChange={handlePageChange}
+            nextPageText={'Next'}
+            prevPageText={'Prev'}
+            firstPageText={'First'}
+            lastPageText={'Last'}
+            itemClass="page-item"
+            linkClass="page-link"
+          />
+        </div>
       )}
     </Fragment>
   );

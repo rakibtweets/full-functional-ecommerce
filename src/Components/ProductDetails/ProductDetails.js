@@ -9,6 +9,7 @@ import {
 } from '../../Redux/Actions/productActions';
 import './ProductDetails.css';
 import { Carousel } from 'react-bootstrap';
+import MetaData from '../Layout/MetaData/MetaData';
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -32,6 +33,8 @@ const ProductDetails = () => {
         <Loader />
       ) : (
         <Fragment>
+          <MetaData title={product.name} />
+
           <div className="row f-flex justify-content-around">
             <div className="col-12 col-lg-5 img-fluid" id="product_image">
               <Carousel pause="hover">
