@@ -18,9 +18,26 @@ const Range = createSliderWithTooltip(Slider.Range);
 const Home = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [price, setPrice] = useState([1, 1000]);
+  const [category, setCategory] = useState('');
   const alert = useAlert();
   const dispatch = useDispatch();
   const { keyword } = useParams();
+
+  const categories = [
+    'Electronics',
+    'Cameras',
+    'Laptops',
+    'Accessories',
+    'Headphones',
+    'Food',
+    'Books',
+    'Clothes/Shoes',
+    'Beauty/Health',
+    'Sports',
+    'Outdoor',
+    'Home',
+  ];
+
   const { loading, products, error, productCount, resPerPage } = useSelector(
     (state) => state.products
   );
@@ -29,8 +46,8 @@ const Home = () => {
     if (error) {
       return alert.error(error);
     }
-    dispatch(getProducts(keyword, currentPage, price));
-  }, [dispatch, error, alert, currentPage, keyword, price]);
+    dispatch(getProducts(keyword, currentPage, price, category));
+  }, [dispatch, error, alert, currentPage, keyword, price, category]);
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -49,7 +66,7 @@ const Home = () => {
               {keyword ? (
                 <Fragment>
                   <div className="col-6 col-md-3 mt-5 mb-5">
-                    <div className="px-5">
+                    <div className="pe-5">
                       <Range
                         marks={{
                           1: `$1`,
@@ -66,6 +83,22 @@ const Home = () => {
                         value={price}
                         onChange={(price) => setPrice(price)}
                       />
+                    </div>
+                    <hr className="my-5" />
+                    {/* Categories */}
+                    <div className="mt-5">
+                      <h5 className="mb-3">Categories</h5>
+                      <ul className="ps-0">
+                        {categories.map((category) => (
+                          <li
+                            key={category}
+                            style={{ cursor: 'pointer', listStyleType: 'none' }}
+                            onClick={() => setCategory(category)}
+                          >
+                            {category}
+                          </li>
+                        ))}
+                      </ul>
                     </div>
                   </div>
 
