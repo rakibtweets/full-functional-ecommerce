@@ -7,9 +7,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import { clearErrors, login } from '../../Redux/Actions/userActions';
 import MetaData from '../Layout/MetaData/MetaData';
 import Loader from '../Loader/Loader';
+
 const Login = () => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+
   const navigate = useNavigate();
   const alert = useAlert();
   const dispatch = useDispatch();
@@ -30,6 +32,7 @@ const Login = () => {
     e.preventDefault();
     dispatch(login(email, password));
   };
+
   return (
     <Fragment>
       {loading ? (

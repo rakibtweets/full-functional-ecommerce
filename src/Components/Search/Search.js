@@ -16,7 +16,7 @@ const Search = () => {
   };
   return (
     <>
-      <form onSubmit={handleSearch} action="">
+      <form onSubmit={handleSearch}>
         <div className="input-group">
           <input
             type="text"
