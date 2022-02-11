@@ -10,9 +10,11 @@ import { loadUser } from './Redux/Actions/userActions';
 import store from './Redux/Store';
 
 function App() {
+  //load currently logged in user
   useEffect(() => {
     store.dispatch(loadUser());
   }, []);
+
   return (
     <div className="App">
       <Router>
