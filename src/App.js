@@ -5,8 +5,14 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ProductDetails from './Components/ProductDetails/ProductDetails';
 import Login from './Components/User/Login';
 import Register from './Components/User/Register/Register';
+import { useEffect } from 'react';
+import { loadUser } from './Redux/Actions/userActions';
+import store from './Redux/Store';
 
 function App() {
+  useEffect(() => {
+    store.dispatch(loadUser());
+  }, []);
   return (
     <div className="App">
       <Router>
