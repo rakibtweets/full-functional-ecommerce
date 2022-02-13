@@ -5,11 +5,17 @@ import { Link } from 'react-router-dom';
 import Search from '../../Search/Search';
 import { useAlert } from 'react-alert';
 import { useDispatch, useSelector } from 'react-redux';
+import { logoutUser } from '../../../Redux/Actions/userActions';
 
 const Header = () => {
   const alert = useAlert();
   const dispatch = useDispatch();
   const { user, loading } = useSelector((state) => state.auth);
+
+  const logoutHandler = () => {
+    dispatch(logoutUser());
+    alert.success('Logout successfully.');
+  };
   return (
     <Fragment>
       <nav className="navbar row py-3">
@@ -72,7 +78,7 @@ const Header = () => {
                 <Link
                   className="dropdown-item text-danger"
                   to="/"
-                  // onClick={logoutHandler}
+                  onClick={logoutHandler}
                 >
                   Logout
                 </Link>
