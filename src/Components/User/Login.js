@@ -3,7 +3,7 @@ import './Login.css';
 import { useAlert } from 'react-alert';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { clearErrors, login } from '../../Redux/Actions/userActions';
 import MetaData from '../Layout/MetaData/MetaData';
 import Loader from '../Loader/Loader';
@@ -11,8 +11,9 @@ import Loader from '../Loader/Loader';
 const Login = () => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-
+  const location = useLocation();
   const navigate = useNavigate();
+  const redirectUrl = location?.state?.from || '/';
   const alert = useAlert();
   const dispatch = useDispatch();
   const { isAuthenticated, error, loading } = useSelector(
@@ -20,13 +21,13 @@ const Login = () => {
   );
   useEffect(() => {
     if (isAuthenticated) {
-      navigate('/');
+      navigate(redirectUrl);
     }
     if (error) {
       alert.error(error);
       dispatch(clearErrors());
     }
-  }, [dispatch, alert, isAuthenticated, error, navigate]);
+  }, [dispatch, alert, isAuthenticated, error, navigate, redirectUrl]);
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
