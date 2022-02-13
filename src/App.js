@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 import { loadUser } from './Redux/Actions/userActions';
 import store from './Redux/Store';
 import UserProfile from './Components/User/UserProfile/UserProfile';
+import PrivateRoute from './Components/Routes/PrivateRoute/PrivateRoute';
 
 function App() {
   //load currently logged in user
@@ -42,7 +43,9 @@ function App() {
             element={
               <>
                 <Header />
-                <UserProfile />
+                <PrivateRoute>
+                  <UserProfile />
+                </PrivateRoute>
               </>
             }
           />
