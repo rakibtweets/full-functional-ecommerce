@@ -3,39 +3,49 @@ import '../Login.css';
 import { useAlert } from 'react-alert';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { clearErrors, registerUser } from '../../../Redux/Actions/userActions';
+import {
+  clearErrors,
+  loadUser,
+  updateUserProfile,
+} from '../../../Redux/Actions/userActions';
 import { useNavigate } from 'react-router-dom';
+import { UPDATE_PROFILE_RESET } from '../../../Redux/Constants/userConstants';
 import MetaData from '../../Layout/MetaData/MetaData';
 
-const Register = () => {
-  const [user, setUser] = useState({
-    name: '',
-    email: '',
-    password: '',
-  });
-
-  const { name, email, password } = user;
-
+const UpdateProfile = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [avatar, setAvatar] = useState('');
+  const navigate = useNavigate();
   const [avatarPreview, setAvatarPreview] = useState(
     '/images/default_avatar.jpg'
   );
 
-  const navigate = useNavigate();
   const alert = useAlert();
   const dispatch = useDispatch();
-  const { isAuthenticated, error, loading } = useSelector(
-    (state) => state.auth
-  );
+  const { user } = useSelector((state) => state.auth);
+  const { error, isUpdated, loading } = useSelector((state) => state.user);
+
   useEffect(() => {
-    if (isAuthenticated) {
-      navigate('/');
+    if (user) {
+      setName(user.name);
+      setEmail(user.email);
+      setAvatarPreview(user.avatar.url);
     }
     if (error) {
       alert.error(error);
       dispatch(clearErrors());
     }
-  }, [dispatch, alert, isAuthenticated, error, navigate]);
+
+    if (isUpdated) {
+      alert.success('User Updated Successfully');
+      dispatch(loadUser());
+      navigate('/me');
+      dispatch({
+        type: UPDATE_PROFILE_RESET,
+      });
+    }
+  }, [dispatch, alert, error, navigate, user, isUpdated]);
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -43,82 +53,65 @@ const Register = () => {
     const formData = new FormData();
     formData.set('name', name);
     formData.set('email', email);
-    formData.set('password', password);
     formData.set('avatar', avatar);
 
-    dispatch(registerUser(formData));
+    dispatch(updateUserProfile(formData));
   };
 
   const onChange = (e) => {
-    if (e.target.name === 'avatar') {
-      const reader = new FileReader();
-      // loading file upload
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-          setAvatarPreview(reader.result);
-          setAvatar(reader.result);
-        }
-      };
-      // read file
-      reader.readAsDataURL(e.target.files[0]);
-    } else {
-      setUser({ ...user, [e.target.name]: e.target.value });
-    }
+    const reader = new FileReader();
+    // loading file upload
+    reader.onload = () => {
+      if (reader.readyState === 2) {
+        setAvatarPreview(reader.result);
+        setAvatar(reader.result);
+      }
+    };
+    // read file
+    reader.readAsDataURL(e.target.files[0]);
   };
 
   return (
     <Fragment>
-      <MetaData title="Register User" />
+      <MetaData title={`Update Profile`} />
       <div className="container container-fluid">
         <div className="row wrapper">
           <div className="col-10 col-lg-5">
             <form
-              onSubmit={handleFormSubmit}
               className="shadow-lg"
+              onSubmit={handleFormSubmit}
               encType="multipart/form-data"
             >
-              <h1 className="mb-3">Register</h1>
+              <h1 className="mt-1 mb-5">Update Profile</h1>
 
               <div className="form-group">
-                <label htmlFor="email_field">Name</label>
+                <label for="email_field">Name</label>
                 <input
                   type="name"
                   id="name_field"
                   className="form-control"
                   name="name"
                   value={name}
-                  onChange={onChange}
+                  onChange={(e) => setName(e.target.value)}
                 />
               </div>
 
               <div className="form-group">
-                <label htmlFor="email_field">Email</label>
+                <label for="email_field">Email</label>
                 <input
                   type="email"
                   id="email_field"
                   className="form-control"
                   name="email"
                   value={email}
-                  onChange={onChange}
-                />
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="password_field">Password</label>
-                <input
-                  type="password"
-                  id="password_field"
-                  className="form-control"
-                  name="password"
-                  value={password}
-                  onChange={onChange}
+                  onChange={(e) => setName(e.target.value)}
                 />
               </div>
 
               <div className="form-group">
                 <label htmlFor="avatar_upload">Avatar</label>
-                <div className="d-flex align-items-center w-100">
-                  <div className="d-flex justify-content-between align-items-center w-100">
+                <div className="d-flex align-items-center justify-content-between">
+                  <div>
                     <figure className="avatar mr-3 item-rtl">
                       <img
                         src={avatarPreview}
@@ -133,7 +126,7 @@ const Register = () => {
                       name="avatar"
                       className="custom-file-input"
                       id="customFile"
-                      accept="images/*"
+                      accept="image/*"
                       onChange={onChange}
                     />
                   </div>
@@ -141,12 +134,11 @@ const Register = () => {
               </div>
 
               <button
-                id="register_button"
                 type="submit"
-                className="btn btn-block py-3 w-100"
+                className="btn update-btn btn-block mt-4 mb-3 w-100"
                 disabled={loading ? true : false}
               >
-                REGISTER
+                Update
               </button>
             </form>
           </div>
@@ -156,4 +148,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default UpdateProfile;

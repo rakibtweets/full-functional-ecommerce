@@ -10,6 +10,7 @@ import { loadUser } from './Redux/Actions/userActions';
 import store from './Redux/Store';
 import UserProfile from './Components/User/UserProfile/UserProfile';
 import PrivateRoute from './Components/Routes/PrivateRoute/PrivateRoute';
+import UpdateProfile from './Components/User/UpdateProfile/UpdateProfile';
 
 function App() {
   //load currently logged in user
@@ -45,6 +46,17 @@ function App() {
                 <Header />
                 <PrivateRoute>
                   <UserProfile />
+                </PrivateRoute>
+              </>
+            }
+          />
+          <Route
+            path="/me/update"
+            element={
+              <>
+                <Header />
+                <PrivateRoute>
+                  <UpdateProfile />
                 </PrivateRoute>
               </>
             }
