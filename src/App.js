@@ -8,6 +8,7 @@ import Register from './Components/User/Register/Register';
 import { useEffect } from 'react';
 import { loadUser } from './Redux/Actions/userActions';
 import store from './Redux/Store';
+import UserProfile from './Components/User/UserProfile/UserProfile';
 
 function App() {
   //load currently logged in user
@@ -33,6 +34,15 @@ function App() {
             element={
               <>
                 <Login />
+              </>
+            }
+          />
+          <Route
+            path="/me"
+            element={
+              <>
+                <Header />
+                <UserProfile />
               </>
             }
           />
