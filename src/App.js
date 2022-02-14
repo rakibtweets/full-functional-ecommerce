@@ -11,6 +11,7 @@ import store from './Redux/Store';
 import UserProfile from './Components/User/UserProfile/UserProfile';
 import PrivateRoute from './Components/Routes/PrivateRoute/PrivateRoute';
 import UpdateProfile from './Components/User/UpdateProfile/UpdateProfile';
+import UpdatePassword from './Components/User/UpdatePassword/UpdatePassword';
 
 function App() {
   //load currently logged in user
@@ -57,6 +58,17 @@ function App() {
                 <Header />
                 <PrivateRoute>
                   <UpdateProfile />
+                </PrivateRoute>
+              </>
+            }
+          />
+          <Route
+            path="/password/update"
+            element={
+              <>
+                <Header />
+                <PrivateRoute>
+                  <UpdatePassword />
                 </PrivateRoute>
               </>
             }
