@@ -12,6 +12,8 @@ import UserProfile from './Components/User/UserProfile/UserProfile';
 import PrivateRoute from './Components/Routes/PrivateRoute/PrivateRoute';
 import UpdateProfile from './Components/User/UpdateProfile/UpdateProfile';
 import UpdatePassword from './Components/User/UpdatePassword/UpdatePassword';
+import ForgotPassword from './Components/User/ForgotPassword/ForgotPassword';
+import NewPassword from './Components/User/NewPassword/NewPassword';
 
 function App() {
   //load currently logged in user
@@ -70,6 +72,24 @@ function App() {
                 <PrivateRoute>
                   <UpdatePassword />
                 </PrivateRoute>
+              </>
+            }
+          />
+          <Route
+            path="/password/forgot"
+            element={
+              <>
+                <Header />
+                <ForgotPassword />
+              </>
+            }
+          />
+          <Route
+            path="/password/reset/:token"
+            element={
+              <>
+                <Header />
+                <NewPassword />
               </>
             }
           />
