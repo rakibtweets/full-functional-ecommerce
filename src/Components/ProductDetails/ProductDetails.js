@@ -1,4 +1,4 @@
-import React, { useEffect, Fragment } from 'react';
+import React, { useEffect, Fragment, useState } from 'react';
 import { useAlert } from 'react-alert';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -12,6 +12,7 @@ import { Carousel } from 'react-bootstrap';
 import MetaData from '../Layout/MetaData/MetaData';
 
 const ProductDetails = () => {
+  const [quantity, setQuantity] = useState(1);
   const { id } = useParams();
   const dispatch = useDispatch();
   const alert = useAlert();
@@ -26,6 +27,21 @@ const ProductDetails = () => {
       dispatch(clearErrors());
     }
   }, [dispatch, id, error, alert]);
+
+  const increaseQty = () => {
+    const count = document.querySelector('.count');
+    if (count.valueAsNumber >= product.stock) return;
+
+    const qty = count.valueAsNumber + 1;
+    setQuantity(qty);
+  };
+  const decreaseQty = () => {
+    const count = document.querySelector('.count');
+    if (count.valueAsNumber <= 1) return;
+
+    const qty = count.valueAsNumber - 1;
+    setQuantity(qty);
+  };
 
   return (
     <Fragment>
@@ -69,16 +85,20 @@ const ProductDetails = () => {
 
               <p id="product_price">$ {product.price}</p>
               <div className="stockCounter d-inline">
-                <span className="btn btn-danger minus">-</span>
+                <span onClick={decreaseQty} className="btn btn-danger minus">
+                  -
+                </span>
 
                 <input
                   type="number"
                   className="form-control count d-inline"
-                  value="1"
+                  value={quantity}
                   readOnly
                 />
 
-                <span className="btn btn-primary plus">+</span>
+                <span onClick={increaseQty} className="btn btn-primary plus">
+                  +
+                </span>
               </div>
               <button
                 type="button"
