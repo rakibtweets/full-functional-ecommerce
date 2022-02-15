@@ -10,6 +10,7 @@ import {
 import './ProductDetails.css';
 import { Carousel } from 'react-bootstrap';
 import MetaData from '../Layout/MetaData/MetaData';
+import { addItemToCart } from '../../Redux/Actions/cartActions';
 
 const ProductDetails = () => {
   const [quantity, setQuantity] = useState(1);
@@ -27,6 +28,12 @@ const ProductDetails = () => {
       dispatch(clearErrors());
     }
   }, [dispatch, id, error, alert]);
+
+  //add to cart
+  const addToCart = () => {
+    dispatch(addItemToCart(id, quantity));
+    alert.success('Item added to cart');
+  };
 
   const increaseQty = () => {
     const count = document.querySelector('.count');
@@ -104,6 +111,8 @@ const ProductDetails = () => {
                 type="button"
                 id="cart_btn"
                 className="btn btn-primary d-inline ml-4"
+                disabled={product.stock === 0}
+                onClick={addToCart}
               >
                 Add to Cart
               </button>
