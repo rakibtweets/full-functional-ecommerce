@@ -14,6 +14,7 @@ import UpdateProfile from './Components/User/UpdateProfile/UpdateProfile';
 import UpdatePassword from './Components/User/UpdatePassword/UpdatePassword';
 import ForgotPassword from './Components/User/ForgotPassword/ForgotPassword';
 import NewPassword from './Components/User/NewPassword/NewPassword';
+import Cart from './Components/Cart/Cart/Cart';
 
 function App() {
   //load currently logged in user
@@ -31,6 +32,15 @@ function App() {
               <>
                 <Header />
                 <Home />
+              </>
+            }
+          />
+          <Route
+            path="/cart"
+            element={
+              <>
+                <Header />
+                <Cart />
               </>
             }
           />

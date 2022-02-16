@@ -11,6 +11,7 @@ const Header = () => {
   const alert = useAlert();
   const dispatch = useDispatch();
   const { user, loading } = useSelector((state) => state.auth);
+  const { cartItems } = useSelector((state) => state.cart);
 
   const logoutHandler = () => {
     dispatch(logoutUser());
@@ -37,7 +38,7 @@ const Header = () => {
               <FaShoppingCart size="1.7em" />
             </span>
             <span className="ms-1 rounded p-1" id="cart_count">
-              2
+              {cartItems.length}
             </span>
           </Link>
           {user ? (
