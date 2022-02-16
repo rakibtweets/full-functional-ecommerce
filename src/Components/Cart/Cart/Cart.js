@@ -2,10 +2,24 @@ import React, { Fragment } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import MetaData from '../../Layout/MetaData/MetaData';
 import { Link } from 'react-router-dom';
+import { addItemToCart } from '../../../Redux/Actions/cartActions';
 
 const Cart = () => {
   const dispatch = useDispatch();
   const { cartItems } = useSelector((state) => state.cart);
+
+  const increaseQty = (id, quantity, stock) => {
+    const newQty = quantity + 1;
+    if (newQty > stock) return;
+
+    dispatch(addItemToCart(id, newQty));
+  };
+  const decreaseQty = (id, quantity) => {
+    const newQty = quantity - 1;
+    if (newQty <= 0) return;
+
+    dispatch(addItemToCart(id, newQty));
+  };
   return (
     <Fragment>
       <MetaData title={`Your Cart`} />
@@ -49,15 +63,33 @@ const Cart = () => {
 
                         <div className="col-4 col-lg-3 mt-4 mt-lg-0">
                           <div className="stockCounter d-inline">
-                            <span className="btn btn-danger minus">-</span>
+                            <span
+                              onClick={() =>
+                                decreaseQty(item.product, item.quantity)
+                              }
+                              className="btn btn-danger minus"
+                            >
+                              -
+                            </span>
                             <input
                               type="number"
                               className="form-control count d-inline"
-                              value="1"
+                              value={item.quantity}
                               readOnly
                             />
 
-                            <span className="btn btn-primary plus">+</span>
+                            <span
+                              onClick={() =>
+                                increaseQty(
+                                  item.product,
+                                  item.quantity,
+                                  item.stock
+                                )
+                              }
+                              className="btn btn-primary plus"
+                            >
+                              +
+                            </span>
                           </div>
                         </div>
 
