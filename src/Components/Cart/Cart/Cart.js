@@ -27,11 +27,24 @@ const Cart = () => {
 
     dispatch(addItemToCart(id, newQty));
   };
+
+  // cart summery/cart calculation
+  //sub Total of cart item
+  const subTotal = cartItems?.reduce(
+    (acc, item) => acc + Number(item.quantity),
+    0
+  );
+
+  //estimate total of cart items
+  const estTotal = cartItems?.reduce(
+    (acc, item) => acc + Number(item.price) * Number(item.quantity),
+    0
+  );
   return (
     <Fragment>
       <MetaData title={`Your Cart`} />
       {cartItems.length === 0 ? (
-        <h2 className="mt-5">Your cart is empty</h2>
+        <h2 className="mt-5 text-center">Your cart is empty</h2>
       ) : (
         <Fragment>
           <div className="container container-fluid">
@@ -120,11 +133,13 @@ const Cart = () => {
                   <hr />
                   <p>
                     Subtotal:{' '}
-                    <span className="order-summary-values">3 (Units)</span>
+                    <span className="order-summary-values">
+                      {subTotal.toFixed(2)} (Units)
+                    </span>
                   </p>
                   <p>
                     Est. total:{' '}
-                    <span className="order-summary-values">$765.56</span>
+                    <span className="order-summary-values">$ {estTotal}</span>
                   </p>
 
                   <hr />
