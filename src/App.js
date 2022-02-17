@@ -15,6 +15,7 @@ import UpdatePassword from './Components/User/UpdatePassword/UpdatePassword';
 import ForgotPassword from './Components/User/ForgotPassword/ForgotPassword';
 import NewPassword from './Components/User/NewPassword/NewPassword';
 import Cart from './Components/Cart/Cart/Cart';
+import Shipping from './Components/Cart/Shipping/Shipping';
 
 function App() {
   //load currently logged in user
@@ -45,10 +46,29 @@ function App() {
             }
           />
           <Route
+            path="/shipping"
+            element={
+              <>
+                <Header />
+                <PrivateRoute>
+                  <Shipping />
+                </PrivateRoute>
+              </>
+            }
+          />
+          <Route
             path="/login"
             element={
               <>
                 <Login />
+              </>
+            }
+          />
+          <Route
+            path="/register"
+            element={
+              <>
+                <Register />
               </>
             }
           />
@@ -103,14 +123,7 @@ function App() {
               </>
             }
           />
-          <Route
-            path="/register"
-            element={
-              <>
-                <Register />
-              </>
-            }
-          />
+
           <Route
             path="/search/:keyword"
             element={

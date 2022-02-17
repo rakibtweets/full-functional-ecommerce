@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import MetaData from '../../Layout/MetaData/MetaData';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   addItemToCart,
   removeCartItem,
@@ -9,6 +9,7 @@ import {
 
 const Cart = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { cartItems } = useSelector((state) => state.cart);
 
   const removeCartItemHandler = (id) => {
@@ -40,6 +41,11 @@ const Cart = () => {
     (acc, item) => acc + Number(item.price) * Number(item.quantity),
     0
   );
+
+  const checkOutHandler = () => {
+    navigate('/shipping');
+  };
+
   return (
     <Fragment>
       <MetaData title={`Your Cart`} />
@@ -139,16 +145,21 @@ const Cart = () => {
                   </p>
                   <p>
                     Est. total:{' '}
-                    <span className="order-summary-values">$ {estTotal}</span>
+                    <span className="order-summary-values">
+                      $ {estTotal.toFixed(2)}
+                    </span>
                   </p>
 
                   <hr />
-                  <button
-                    id="checkout_btn"
-                    className="btn btn-primary btn-block"
-                  >
-                    Check out
-                  </button>
+                  <Link to="/shipping">
+                    <button
+                      id="checkout_btn"
+                      className="btn btn-primary btn-block w-100"
+                      onClick={checkOutHandler}
+                    >
+                      Check out
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>
