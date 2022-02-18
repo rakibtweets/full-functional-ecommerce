@@ -16,6 +16,7 @@ import ForgotPassword from './Components/User/ForgotPassword/ForgotPassword';
 import NewPassword from './Components/User/NewPassword/NewPassword';
 import Cart from './Components/Cart/Cart/Cart';
 import Shipping from './Components/Cart/Shipping/Shipping';
+import ConfirmOrder from './Components/Cart/ConfirmOrder/ConfirmOrder';
 
 function App() {
   //load currently logged in user
@@ -52,6 +53,17 @@ function App() {
                 <Header />
                 <PrivateRoute>
                   <Shipping />
+                </PrivateRoute>
+              </>
+            }
+          />
+          <Route
+            path="/order/confirm"
+            element={
+              <>
+                <Header />
+                <PrivateRoute>
+                  <ConfirmOrder />
                 </PrivateRoute>
               </>
             }

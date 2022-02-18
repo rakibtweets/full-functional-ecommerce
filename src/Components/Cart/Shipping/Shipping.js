@@ -20,7 +20,7 @@ const Shipping = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(saveShippingInfo({ address, city, postalCode, phoneNo, country }));
-    navigate('/confirm');
+    navigate('/order/confirm');
   };
 
   return (
