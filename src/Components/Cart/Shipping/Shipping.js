@@ -4,6 +4,7 @@ import { getNames } from 'country-list';
 import MetaData from '../../Layout/MetaData/MetaData';
 import { useNavigate } from 'react-router-dom';
 import { saveShippingInfo } from '../../../Redux/Actions/cartActions';
+import CheckoutSteps from '../CheckoutSteps/CheckoutSteps';
 
 const Shipping = () => {
   const { shippingInfo } = useSelector((state) => state.cart);
@@ -25,6 +26,8 @@ const Shipping = () => {
   return (
     <Fragment>
       <MetaData title={`Shipping Info`} />
+
+      <CheckoutSteps shipping />
       <div className="row wrapper mt-3">
         <div className="col-10 col-lg-5">
           <form onSubmit={submitHandler} className="shadow-lg">
