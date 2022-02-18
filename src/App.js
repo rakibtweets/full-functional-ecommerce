@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ProductDetails from './Components/ProductDetails/ProductDetails';
 import Login from './Components/User/Login';
 import Register from './Components/User/Register/Register';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { loadUser } from './Redux/Actions/userActions';
 import store from './Redux/Store';
 import UserProfile from './Components/User/UserProfile/UserProfile';
@@ -17,11 +17,25 @@ import NewPassword from './Components/User/NewPassword/NewPassword';
 import Cart from './Components/Cart/Cart/Cart';
 import Shipping from './Components/Cart/Shipping/Shipping';
 import ConfirmOrder from './Components/Cart/ConfirmOrder/ConfirmOrder';
+import axios from 'axios';
+import Payment from './Components/Cart/Payment/Payment';
+
+// stripe Payment
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 
 function App() {
+  const [stripeApiKey, setStripeApiKey] = useState('');
+
   //load currently logged in user
   useEffect(() => {
     store.dispatch(loadUser());
+    async function getStripeApiKey() {
+      const { data } = await axios.get(`/api/v1/paymentapi`);
+      console.log('~ data', data.stripeApiKey);
+      setStripeApiKey(data.stripeApiKey);
+    }
+    getStripeApiKey();
   }, []);
 
   return (
@@ -68,6 +82,31 @@ function App() {
               </>
             }
           />
+          {stripeApiKey && (
+            <Route
+              path="/payment"
+              element={
+                <>
+                  <Elements stripe={loadStripe(stripeApiKey)}>
+                    <Header />
+                    <PrivateRoute>
+                      <Payment />
+                    </PrivateRoute>
+                  </Elements>
+                </>
+              }
+            />
+          )}
+          {/*  <Route
+            path="/payment"
+            element={
+              <>
+                <Header />
+                <Payment />
+              </>
+            }
+          /> */}
+
           <Route
             path="/login"
             element={

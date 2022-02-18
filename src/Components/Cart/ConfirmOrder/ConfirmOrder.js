@@ -27,6 +27,7 @@ const ConfirmOrder = () => {
       totalPrice,
     };
     sessionStorage.setItem('orderInfo', JSON.stringify(data));
+    navigate('/payment');
   };
 
   return (
@@ -117,15 +118,14 @@ const ConfirmOrder = () => {
                 </p>
 
                 <hr />
-                <Link to="/order/payment">
-                  <button
-                    id="checkout_btn"
-                    className="btn btn-primary btn-block"
-                    onClick={proccedToPayment}
-                  >
-                    Proceed to Payment
-                  </button>
-                </Link>
+
+                <button
+                  id="checkout_btn"
+                  className="btn btn-primary btn-block"
+                  onClick={proccedToPayment}
+                >
+                  Proceed to Payment
+                </button>
               </div>
             </div>
           </div>

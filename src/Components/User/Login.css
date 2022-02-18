@@ -2,13 +2,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 5rem;
-
+  margin-top: 3rem;
   font-weight: 700;
 }
 
 .wrapper form {
-  padding: 2.5rem 3rem;
+  padding: 2rem 3rem;
 }
 
 .wrapper form .btn {
