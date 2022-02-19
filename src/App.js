@@ -23,6 +23,7 @@ import Payment from './Components/Cart/Payment/Payment';
 // stripe Payment
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
+import OrderSuccess from './Components/Cart/OrderSuccess/OrderSuccess';
 
 function App() {
   const [stripeApiKey, setStripeApiKey] = useState('');
@@ -78,6 +79,17 @@ function App() {
                 <Header />
                 <PrivateRoute>
                   <ConfirmOrder />
+                </PrivateRoute>
+              </>
+            }
+          />
+          <Route
+            path="/success"
+            element={
+              <>
+                <Header />
+                <PrivateRoute>
+                  <OrderSuccess />
                 </PrivateRoute>
               </>
             }

@@ -1,11 +1,12 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import './payment.css';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import MetaData from '../../Layout/MetaData/MetaData';
 import { useAlert } from 'react-alert';
 import { useNavigate } from 'react-router-dom';
 import CheckoutSteps from '../CheckoutSteps/CheckoutSteps';
 import axios from 'axios';
+import { clearErrors, newOrder } from '../../../Redux/Actions/orderActions';
 
 import {
   useStripe,
@@ -31,13 +32,31 @@ const Payment = () => {
   const stripe = useStripe();
   const elements = useElements();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const { cartItems, shippingInfo } = useSelector((state) => state.cart);
+  const { error } = useSelector((state) => state.newOrder);
 
-  //   useEffect(() => {}, []);
+  useEffect(() => {
+    if (error) {
+      alert.error(error);
+      dispatch(clearErrors());
+    }
+  }, [dispatch, error, alert]);
+
+  const order = {
+    orderItems: cartItems,
+    shippingInfo,
+  };
 
   // Get order information form session storage
   const orderInfo = JSON.parse(sessionStorage.getItem('orderInfo'));
+  if (orderInfo) {
+    order.itemsPrice = orderInfo.itemsPrice;
+    order.shippingPrice = orderInfo.shippingPrice;
+    order.taxPrice = orderInfo.taxPrice;
+    order.totalPrice = orderInfo.totalPrice;
+  }
 
   const paymentData = {
     amount: Math.round(orderInfo.totalPrice * 100),
@@ -76,6 +95,11 @@ const Payment = () => {
         // the payment is processed or not
         if ((result.paymentIntent.status = 'succeeded')) {
           // TODO: New order
+          order.paymentInfo = {
+            id: result.paymentIntent.id,
+            status: result.paymentIntent.status,
+          };
+          dispatch(newOrder(order));
 
           navigate('/success');
         } else {
